@@ -1,3 +1,6 @@
+.flutter-plugins
+.flutter-plugins-dependencies
+
 ### macOS template
 # General
 .DS_Store

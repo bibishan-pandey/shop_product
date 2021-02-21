@@ -41,6 +41,7 @@ ThemeData darkTheme = ThemeData(
   indicatorColor: Color(0xff64ffda),
   hintColor: Color(0x80ffffff),
   errorColor: Color(0xffd32f2f),
+  fontFamily: "Lato",
   buttonTheme: ButtonThemeData(
     textTheme: ButtonTextTheme.normal,
     minWidth: 88,
