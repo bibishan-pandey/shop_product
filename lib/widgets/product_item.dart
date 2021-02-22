@@ -1,21 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_product/models/product.dart';
 import 'package:shop_product/screens/product_detail_screen.dart';
 
 class ProductItem extends StatelessWidget {
-  final String id;
-  final String title;
-  final double price;
-  final String imageUrl;
-
-  const ProductItem({
-    Key key,
-    @required this.id,
-    @required this.title,
-    @required this.price,
-    @required this.imageUrl,
-  }) : super(key: key);
-
-  GridTileBar _buildHeaderGridTileBar(BuildContext context) {
+  GridTileBar _buildHeaderGridTileBar(
+    BuildContext context, {
+    @required String title,
+  }) {
     return GridTileBar(
       backgroundColor: Theme.of(context).primaryColor.withOpacity(0.7),
       leading: Text(
@@ -30,42 +22,48 @@ class ProductItem extends StatelessWidget {
     );
   }
 
-  GridTileBar _buildFooterGridTileBar(BuildContext context) {
-    return GridTileBar(
-      backgroundColor: Theme.of(context).primaryColor.withOpacity(0.7),
-      leading: GestureDetector(
-        child: Icon(Icons.favorite_outline),
-        onTap: () {},
-      ),
-      title: Text(
-        '\$$price',
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      trailing: GestureDetector(
-        child: Icon(Icons.shopping_cart_outlined),
-        onTap: () {},
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    final _item = Provider.of<Product>(context);
+
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(3)),
       child: GridTile(
-        header: _buildHeaderGridTileBar(context),
-        footer: _buildFooterGridTileBar(context),
+        header: _buildHeaderGridTileBar(
+          context,
+          title: _item.title,
+        ),
+        footer: GridTileBar(
+          backgroundColor: Theme.of(context).primaryColor.withOpacity(0.7),
+          leading: GestureDetector(
+            child: Icon(
+              _item.isFavorite ? Icons.favorite : Icons.favorite_outline,
+              color: _item.isFavorite ? Colors.red : Colors.white,
+            ),
+            onTap: () {
+              _item.toggleFavoriteStatus();
+            },
+          ),
+          title: Text(
+            '\$${_item.price}',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          trailing: GestureDetector(
+            child: Icon(Icons.shopping_cart_outlined),
+            onTap: () {},
+          ),
+        ),
         child: GestureDetector(
           onTap: () {
             Navigator.of(context).pushNamed(
               ProductDetailScreen.routeName,
-              arguments: id,
+              arguments: _item.id,
             );
           },
           child: Image.network(
-            imageUrl,
+            _item.imageUrl,
             width: double.infinity,
             fit: BoxFit.cover,
             loadingBuilder: (context, child, loadingProgress) {

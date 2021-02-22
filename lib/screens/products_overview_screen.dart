@@ -38,11 +38,10 @@ class ProductGridView extends StatelessWidget {
       ),
       itemCount: products.length,
       itemBuilder: (ctx, idx) {
-        return ProductItem(
-          id: products[idx].id,
-          title: products[idx].title,
-          price: products[idx].price,
-          imageUrl: products[idx].imageUrl,
+        // adding listeners to notify to each Products
+        return ChangeNotifierProvider(
+          create: (ctx) => products[idx],
+          child: ProductItem(),
         );
       },
     );
