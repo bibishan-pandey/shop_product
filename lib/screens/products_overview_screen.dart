@@ -39,8 +39,9 @@ class ProductGridView extends StatelessWidget {
       itemCount: products.length,
       itemBuilder: (ctx, idx) {
         // adding listeners to notify to each Products
-        return ChangeNotifierProvider(
-          create: (ctx) => products[idx],
+        return ChangeNotifierProvider.value(
+          // create: (ctx) => products[idx],
+          value: products[idx],
           child: ProductItem(),
         );
       },

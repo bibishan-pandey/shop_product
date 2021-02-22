@@ -24,7 +24,9 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _item = Provider.of<Product>(context);
+    // not listening to the changes but using Consumer below at
+    // favorites icon to listen and update the changes
+    final _item = Provider.of<Product>(context, listen: false);
 
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(3)),
@@ -35,13 +37,17 @@ class ProductItem extends StatelessWidget {
         ),
         footer: GridTileBar(
           backgroundColor: Theme.of(context).primaryColor.withOpacity(0.7),
-          leading: GestureDetector(
-            child: Icon(
-              _item.isFavorite ? Icons.favorite : Icons.favorite_outline,
-              color: _item.isFavorite ? Colors.red : Colors.white,
-            ),
-            onTap: () {
-              _item.toggleFavoriteStatus();
+          leading: Consumer<Product>(
+            builder: (ctx, product, child) {
+              return GestureDetector(
+                child: Icon(
+                  product.isFavorite ? Icons.favorite : Icons.favorite_outline,
+                  color: product.isFavorite ? Colors.red : Colors.white,
+                ),
+                onTap: () {
+                  product.toggleFavoriteStatus();
+                },
+              );
             },
           ),
           title: Text(
