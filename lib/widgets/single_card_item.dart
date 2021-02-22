@@ -35,10 +35,25 @@ class SingleCardItem extends StatelessWidget {
           vertical: 10,
           horizontal: 16,
         ),
-        child: Icon(
-          Icons.delete_outlined,
-          color: Colors.white,
-          size: 40,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Icon(
+              Icons.delete_outlined,
+              color: Colors.white,
+              size: 30,
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text(
+              'Remove',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 22,
+              ),
+            ),
+          ],
         ),
       ),
       child: Container(
