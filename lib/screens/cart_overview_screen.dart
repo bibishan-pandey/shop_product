@@ -26,6 +26,7 @@ class CartOverviewScreen extends StatelessWidget {
           itemBuilder: (ctx, idx) {
             return SingleCardItem(
               id: _cartItems.items.values.toList()[idx].id,
+              productId: _cartItems.items.keys.toList()[idx],
               price: _cartItems.items.values.toList()[idx].price,
               quantity: _cartItems.items.values.toList()[idx].quantity,
               title: _cartItems.items.values.toList()[idx].title,
