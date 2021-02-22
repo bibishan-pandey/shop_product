@@ -5,7 +5,7 @@ class CartProvider with ChangeNotifier {
   Map<String, CartItem> _items = {};
 
   Map<String, CartItem> get items {
-    return {...items};
+    return {..._items};
   }
 
   int get itemCount {
@@ -16,6 +16,15 @@ class CartProvider with ChangeNotifier {
       count += value.quantity;
     });
     return count;
+  }
+
+  double get totalPrice {
+    double total = 0.0;
+    if (_items.isEmpty) return total;
+    _items.forEach((key, value) {
+      total += (value.price * value.quantity);
+    });
+    return total;
   }
 
   void add(

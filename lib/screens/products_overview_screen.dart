@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_product/providers/cart_provider.dart';
 import 'package:shop_product/providers/product_provider.dart';
+import 'package:shop_product/screens/cart_overview_screen.dart';
 import 'package:shop_product/widgets/badge.dart';
 import 'package:shop_product/widgets/product_item.dart';
 
@@ -34,8 +35,12 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
               );
             },
             child: IconButton(
-              icon: Icon(Icons.shopping_bag),
-              onPressed: () {},
+              icon: Icon(Icons.shopping_cart),
+              onPressed: () {
+                Navigator.of(context).pushNamed(
+                  CartOverviewScreen.routeName,
+                );
+              },
             ),
           ),
           PopupMenuButton(
