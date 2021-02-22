@@ -13,7 +13,11 @@ class ProductProvider with ChangeNotifier {
     return [..._items];
   }
 
-  void addProduct() {
+  void add() {
     notifyListeners();
+  }
+
+  Product findById(String id) {
+    return _items.firstWhere((element) => element.id == id);
   }
 }
