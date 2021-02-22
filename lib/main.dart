@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
         title: 'Shop Product',
         theme: lightTheme,
         darkTheme: darkTheme,
-        themeMode: ThemeMode.dark,
+        themeMode: ThemeMode.system,
         home: ProductOverviewScreen(),
         routes: {
           ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
