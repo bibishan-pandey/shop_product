@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_product/models/product.dart';
+import 'package:shop_product/providers/cart_provider.dart';
 import 'package:shop_product/screens/product_detail_screen.dart';
 
 class ProductItem extends StatelessWidget {
@@ -26,14 +27,15 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     // not listening to the changes but using Consumer below at
     // favorites icon to listen and update the changes
-    final _item = Provider.of<Product>(context, listen: false);
+    final _productItem = Provider.of<Product>(context, listen: false);
+    final _cartItem = Provider.of<CartProvider>(context, listen: false);
 
     return ClipRRect(
       borderRadius: BorderRadius.all(Radius.circular(3)),
       child: GridTile(
         header: _buildHeaderGridTileBar(
           context,
-          title: _item.title,
+          title: _productItem.title,
         ),
         footer: GridTileBar(
           backgroundColor: Theme.of(context).primaryColor.withOpacity(0.7),
@@ -51,28 +53,34 @@ class ProductItem extends StatelessWidget {
             },
           ),
           title: Text(
-            '\$${_item.price}',
+            '\$${_productItem.price}',
             style: TextStyle(
               fontWeight: FontWeight.bold,
             ),
           ),
           trailing: GestureDetector(
             child: Icon(Icons.shopping_cart_outlined),
-            onTap: () {},
+            onTap: () {
+              _cartItem.add(
+                _productItem.id,
+                _productItem.title,
+                _productItem.price,
+              );
+            },
           ),
         ),
         child: GestureDetector(
           onTap: () {
             Navigator.of(context).pushNamed(
               ProductDetailScreen.routeName,
-              arguments: _item.id,
+              arguments: _productItem.id,
             );
           },
           child: Image.network(
-            _item.imageUrl,
+            _productItem.imageUrl,
             width: double.infinity,
             fit: BoxFit.cover,
-            loadingBuilder: (context, child, loadingProgress) {
+            loadingBuilder: (ctx, child, loadingProgress) {
               return loadingProgress == null
                   ? child
                   : LinearProgressIndicator();
