@@ -6,6 +6,7 @@ import 'package:shop_product/config/themes/light_theme.dart';
 import 'package:shop_product/providers/cart_provider.dart';
 import 'package:shop_product/providers/order_provider.dart';
 import 'package:shop_product/providers/product_provider.dart';
+import 'package:shop_product/screens/add_edit_product_screen.dart';
 import 'package:shop_product/screens/cart_overview_screen.dart';
 import 'package:shop_product/screens/order_overview_screen.dart';
 import 'package:shop_product/screens/product_detail_screen.dart';
@@ -51,6 +52,7 @@ class App extends StatelessWidget {
         CartOverviewScreen.routeName: (ctx) => CartOverviewScreen(),
         OrderOverviewScreen.routeName: (ctx) => OrderOverviewScreen(),
         UserProductScreen.routeName: (ctx) => UserProductScreen(),
+        AddEditProductScreen.routeName: (ctx) => AddEditProductScreen(),
       },
       debugShowCheckedModeBanner: false,
     );

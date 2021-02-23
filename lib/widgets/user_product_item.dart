@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_product/screens/add_edit_product_screen.dart';
 
 class UserProductItem extends StatelessWidget {
   final String title;
@@ -34,12 +35,16 @@ class UserProductItem extends StatelessWidget {
           children: [
             IconButton(
               icon: Icon(Icons.edit_outlined),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(AddEditProductScreen.routeName);
+              },
+              tooltip: 'Edit',
               color: Theme.of(context).buttonTheme.colorScheme.background,
             ),
             IconButton(
               icon: Icon(Icons.delete_outline_outlined),
               onPressed: () {},
+              tooltip: 'Delete',
               color: Theme.of(context).buttonTheme.colorScheme.error,
             ),
           ],
