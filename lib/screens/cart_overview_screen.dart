@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shop_product/providers/cart_provider.dart';
 import 'package:shop_product/providers/order_provider.dart';
 import 'package:shop_product/providers/product_provider.dart';
+import 'package:shop_product/screens/order_overview_screen.dart';
 import 'package:shop_product/widgets/single_card_item.dart';
 
 class CartOverviewScreen extends StatelessWidget {
@@ -57,6 +58,7 @@ class CartOverviewScreen extends StatelessWidget {
           );
           _cartItems.clear();
           Navigator.of(context, rootNavigator: true).pop('dialog');
+          Navigator.of(context).pushNamed(OrderOverviewScreen.routeName);
         },
       );
 

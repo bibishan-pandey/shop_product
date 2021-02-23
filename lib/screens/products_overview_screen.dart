@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shop_product/providers/cart_provider.dart';
 import 'package:shop_product/providers/product_provider.dart';
 import 'package:shop_product/screens/cart_overview_screen.dart';
+import 'package:shop_product/screens/order_overview_screen.dart';
 import 'package:shop_product/widgets/badge.dart';
 import 'package:shop_product/widgets/product_item.dart';
 
@@ -36,12 +37,20 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
             },
             child: IconButton(
               icon: Icon(Icons.shopping_cart),
+              tooltip: 'Cart',
               onPressed: () {
                 Navigator.of(context).pushNamed(
                   CartOverviewScreen.routeName,
                 );
               },
             ),
+          ),
+          IconButton(
+            icon: Icon(Icons.shopping_bag),
+            tooltip: 'Orders',
+            onPressed: () {
+              Navigator.of(context).pushNamed(OrderOverviewScreen.routeName);
+            },
           ),
           PopupMenuButton(
             onSelected: (FilterOptions value) {
