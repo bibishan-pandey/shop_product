@@ -74,7 +74,7 @@ class SingleCardItem extends StatelessWidget {
             ),
           ),
           title: Text(title),
-          subtitle: Text('\$${price * quantity}'),
+          subtitle: Text('\$${(price * quantity).toStringAsFixed(2)}'),
           trailing: Text('$quantity x'),
         ),
       ),
