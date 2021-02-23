@@ -39,6 +39,11 @@ class ProductProvider with ChangeNotifier {
     }
   }
 
+  void remove(String id) {
+    _items.removeWhere((element) => element.id == id);
+    notifyListeners();
+  }
+
   Product findById(String id) {
     return _items.firstWhere((element) => element.id == id);
   }

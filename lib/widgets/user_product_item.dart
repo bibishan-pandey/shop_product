@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shop_product/providers/product_provider.dart';
 import 'package:shop_product/screens/add_edit_product_screen.dart';
 
 class UserProductItem extends StatelessWidget {
@@ -12,6 +14,39 @@ class UserProductItem extends StatelessWidget {
     @required this.title,
     @required this.imageUrl,
   }) : super(key: key);
+
+  void _showConfirmationDialog(BuildContext context) {
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context, rootNavigator: true).pop('dialog');
+      },
+    );
+    Widget continueButton = RaisedButton(
+      child: Text("Continue"),
+      color: Theme.of(context).accentColor,
+      onPressed: () {
+        Provider.of<ProductProvider>(context, listen: false).remove(id);
+        Navigator.of(context, rootNavigator: true).pop('dialog');
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title: Text("Remove Item"),
+      content: Text("Would you like to remove the item?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +83,9 @@ class UserProductItem extends StatelessWidget {
             ),
             IconButton(
               icon: Icon(Icons.delete_outline_outlined),
-              onPressed: () {},
+              onPressed: () {
+                _showConfirmationDialog(context);
+              },
               tooltip: 'Delete',
               color: Theme.of(context).buttonTheme.colorScheme.error,
             ),
