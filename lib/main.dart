@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:shop_product/config/themes/dark_theme.dart';
 import 'package:shop_product/config/themes/light_theme.dart';
 import 'package:shop_product/providers/cart_provider.dart';
+import 'package:shop_product/providers/order_provider.dart';
 import 'package:shop_product/providers/product_provider.dart';
 import 'package:shop_product/screens/cart_overview_screen.dart';
 import 'package:shop_product/screens/product_detail_screen.dart';
@@ -23,6 +24,9 @@ void main() {
       ),
       ChangeNotifierProvider(
         create: (ctx) => CartProvider(),
+      ),
+      ChangeNotifierProvider(
+        create: (ctx) => OrderProvider(),
       ),
     ],
     child: App(),
