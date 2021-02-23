@@ -48,6 +48,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
   }
 
   void _saveForm() {
+    _form.currentState.validate();
     _form.currentState.save();
     print(_product.title);
     print(_product.price);
@@ -73,9 +74,16 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
             TextFormField(
               decoration: InputDecoration(
                 labelText: 'Title',
+                errorStyle: TextStyle(color: Theme.of(context).errorColor),
               ),
               textInputAction: TextInputAction.next,
               autofocus: true,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Field is required!';
+                }
+                return null;
+              },
               onFieldSubmitted: (value) {
                 FocusScope.of(context).requestFocus(_priceFocusNode);
               },
@@ -92,10 +100,23 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
             TextFormField(
               decoration: InputDecoration(
                 labelText: 'Price',
+                errorStyle: TextStyle(color: Theme.of(context).errorColor),
               ),
               textInputAction: TextInputAction.next,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
               focusNode: _priceFocusNode,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Field is required!';
+                }
+                if (double.tryParse(value) == null) {
+                  return 'Invalid Price!';
+                }
+                if (double.parse(value) <= 0.0) {
+                  return 'Price should be greater than 0!';
+                }
+                return null;
+              },
               onFieldSubmitted: (value) {
                 FocusScope.of(context).requestFocus(_descriptionFocusNode);
               },
@@ -112,10 +133,20 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
             TextFormField(
               decoration: InputDecoration(
                 labelText: 'Description',
+                errorStyle: TextStyle(color: Theme.of(context).errorColor),
               ),
               keyboardType: TextInputType.multiline,
               maxLines: 3,
               focusNode: _descriptionFocusNode,
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Field is required!';
+                }
+                if (value.length < 10) {
+                  return 'Must be greater than 10 characters!';
+                }
+                return null;
+              },
               onSaved: (newValue) {
                 _product = Product(
                   id: null,
@@ -156,7 +187,18 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                   child: TextFormField(
                     decoration: InputDecoration(
                       labelText: 'Image Url',
+                      errorStyle:
+                          TextStyle(color: Theme.of(context).errorColor),
                     ),
+                    validator: (value) {
+                      if (value.isEmpty) {
+                        return 'Field is required!';
+                      }
+                      if (!value.startsWith('http')) {
+                        return 'Url must start with http or https';
+                      }
+                      return null;
+                    },
                     keyboardType: TextInputType.url,
                     textInputAction: TextInputAction.done,
                     controller: _imageUrlController,
