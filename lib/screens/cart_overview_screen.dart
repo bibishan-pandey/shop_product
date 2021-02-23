@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shop_product/providers/cart_provider.dart';
+import 'package:shop_product/providers/order_provider.dart';
 import 'package:shop_product/providers/product_provider.dart';
 import 'package:shop_product/widgets/single_card_item.dart';
 
@@ -36,6 +37,43 @@ class CartOverviewScreen extends StatelessWidget {
             );
           },
         ),
+      );
+    }
+
+    void _showConfirmationDialog() {
+      Widget cancelButton = FlatButton(
+        child: Text("Cancel"),
+        onPressed: () {
+          Navigator.of(context, rootNavigator: true).pop('dialog');
+        },
+      );
+      Widget continueButton = RaisedButton(
+        child: Text("Continue"),
+        color: Theme.of(context).accentColor,
+        onPressed: () {
+          Provider.of<OrderProvider>(context, listen: false).add(
+            _cartItems.items.values.toList(),
+            _cartItems.totalPrice,
+          );
+          _cartItems.clear();
+          Navigator.of(context, rootNavigator: true).pop('dialog');
+        },
+      );
+
+      AlertDialog alert = AlertDialog(
+        title: Text("Order Confirmation"),
+        content: Text("Would you like to confirm the order?"),
+        actions: [
+          cancelButton,
+          continueButton,
+        ],
+      );
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
       );
     }
 
@@ -110,7 +148,7 @@ class CartOverviewScreen extends StatelessWidget {
                     splashColor: Theme.of(context).primaryColorDark,
                     color: Theme.of(context).primaryColor,
                     textColor: Colors.white,
-                    onPressed: () {},
+                    onPressed: _showConfirmationDialog,
                     child: Text(
                       'Order Now',
                       style: TextStyle(fontSize: 22),
