@@ -28,6 +28,34 @@ class SingleCardItem extends StatelessWidget {
       onDismissed: (direction) {
         Provider.of<CartProvider>(context, listen: false).remove(productId);
       },
+      confirmDismiss: (direction) {
+        Widget cancelButton = FlatButton(
+          child: Text("Cancel"),
+          onPressed: () {
+            Navigator.of(context).pop(false);
+          },
+        );
+        Widget continueButton = RaisedButton(
+          child: Text("Continue"),
+          color: Theme.of(context).accentColor,
+          onPressed: () {
+            Navigator.of(context).pop(true);
+          },
+        );
+        return showDialog(
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              title: Text('Remove item(s)'),
+              content: Text('Would you like to remove the item(s)?'),
+              actions: [
+                cancelButton,
+                continueButton,
+              ],
+            );
+          },
+        );
+      },
       background: Container(
         color: Theme.of(context).errorColor,
         alignment: Alignment.centerRight,
