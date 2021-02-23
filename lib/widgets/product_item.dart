@@ -14,11 +14,11 @@ class ProductItem extends StatelessWidget {
       leading: Text(
         title,
         style: TextStyle(
-          fontSize: 22,
+          // fontSize: 22,
+          fontWeight: FontWeight.bold,
           color: Colors.white,
         ),
-        softWrap: true,
-        overflow: TextOverflow.fade,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }
