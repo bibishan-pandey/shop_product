@@ -100,29 +100,35 @@ class ProductGridView extends StatelessWidget {
     final _items = Provider.of<ProductProvider>(context);
     final products = showFavorites ? _items.showFavoriteItems : _items.items;
 
-    return GridView.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount:
-            MediaQuery.of(context).orientation == Orientation.portrait ? 2 : 3,
-        childAspectRatio: 1.5 / 2,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-      ),
-      padding: const EdgeInsets.only(
-        left: 16,
-        right: 16,
-        top: 10,
-        bottom: 10,
-      ),
-      itemCount: products.length,
-      itemBuilder: (ctx, idx) {
-        // adding listeners to notify to each Products
-        return ChangeNotifierProvider.value(
-          // create: (ctx) => products[idx],
-          value: products[idx],
-          child: ProductItem(),
-        );
-      },
-    );
+    return products.length == 0
+        ? Center(
+            child: Text('No products found'),
+          )
+        : GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount:
+                  MediaQuery.of(context).orientation == Orientation.portrait
+                      ? 2
+                      : 3,
+              childAspectRatio: 1.5 / 2,
+              crossAxisSpacing: 10,
+              mainAxisSpacing: 10,
+            ),
+            padding: const EdgeInsets.only(
+              left: 16,
+              right: 16,
+              top: 10,
+              bottom: 10,
+            ),
+            itemCount: products.length,
+            itemBuilder: (ctx, idx) {
+              // adding listeners to notify to each Products
+              return ChangeNotifierProvider.value(
+                // create: (ctx) => products[idx],
+                value: products[idx],
+                child: ProductItem(),
+              );
+            },
+          );
   }
 }

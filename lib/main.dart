@@ -10,6 +10,7 @@ import 'package:shop_product/screens/cart_overview_screen.dart';
 import 'package:shop_product/screens/order_overview_screen.dart';
 import 'package:shop_product/screens/product_detail_screen.dart';
 import 'package:shop_product/screens/products_overview_screen.dart';
+import 'package:shop_product/screens/user_product_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -49,6 +50,7 @@ class App extends StatelessWidget {
         ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
         CartOverviewScreen.routeName: (ctx) => CartOverviewScreen(),
         OrderOverviewScreen.routeName: (ctx) => OrderOverviewScreen(),
+        UserProductScreen.routeName: (ctx) => UserProductScreen(),
       },
       debugShowCheckedModeBanner: false,
     );
