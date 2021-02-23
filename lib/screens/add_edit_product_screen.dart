@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shop_product/models/product.dart';
 
 class AddEditProductScreen extends StatefulWidget {
   static const routeName = '/add-edit-product';
@@ -13,6 +14,16 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
   final _imageUrlFocusNode = FocusNode();
 
   final _imageUrlController = TextEditingController();
+
+  final _form = GlobalKey<FormState>();
+
+  Product _product = Product(
+    id: '',
+    title: '',
+    description: '',
+    price: 0.0,
+    imageUrl: '',
+  );
 
   @override
   void initState() {
@@ -36,6 +47,14 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
     }
   }
 
+  void _saveForm() {
+    _form.currentState.save();
+    print(_product.title);
+    print(_product.price);
+    print(_product.description);
+    print(_product.imageUrl);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,6 +63,7 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
         centerTitle: false,
       ),
       body: Form(
+        key: _form,
         child: ListView(
           padding: EdgeInsets.symmetric(
             horizontal: 16,
@@ -59,6 +79,15 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
               onFieldSubmitted: (value) {
                 FocusScope.of(context).requestFocus(_priceFocusNode);
               },
+              onSaved: (newValue) {
+                _product = Product(
+                  id: null,
+                  title: newValue,
+                  description: _product.description,
+                  price: _product.price,
+                  imageUrl: _product.imageUrl,
+                );
+              },
             ),
             TextFormField(
               decoration: InputDecoration(
@@ -70,6 +99,15 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
               onFieldSubmitted: (value) {
                 FocusScope.of(context).requestFocus(_descriptionFocusNode);
               },
+              onSaved: (newValue) {
+                _product = Product(
+                  id: null,
+                  title: _product.title,
+                  description: _product.description,
+                  price: double.parse(newValue),
+                  imageUrl: _product.imageUrl,
+                );
+              },
             ),
             TextFormField(
               decoration: InputDecoration(
@@ -78,6 +116,15 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
               keyboardType: TextInputType.multiline,
               maxLines: 3,
               focusNode: _descriptionFocusNode,
+              onSaved: (newValue) {
+                _product = Product(
+                  id: null,
+                  title: _product.title,
+                  description: newValue,
+                  price: _product.price,
+                  imageUrl: _product.imageUrl,
+                );
+              },
             ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.end,
@@ -114,12 +161,30 @@ class _AddEditProductScreenState extends State<AddEditProductScreen> {
                     textInputAction: TextInputAction.done,
                     controller: _imageUrlController,
                     focusNode: _imageUrlFocusNode,
+                    onSaved: (newValue) {
+                      _product = Product(
+                        id: null,
+                        title: _product.title,
+                        description: _product.description,
+                        price: _product.price,
+                        imageUrl: newValue,
+                      );
+                    },
                     // onEditingComplete: () {
                     //   setState(() {});
                     // },
                   ),
                 ),
               ],
+            ),
+            Container(
+              margin: EdgeInsets.only(top: 16),
+              child: RaisedButton(
+                color: Theme.of(context).buttonTheme.colorScheme.primaryVariant,
+                textColor: Colors.white,
+                child: Text('Save Product'),
+                onPressed: _saveForm,
+              ),
             ),
           ],
         ),
