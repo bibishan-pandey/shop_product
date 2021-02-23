@@ -58,7 +58,8 @@ class CartOverviewScreen extends StatelessWidget {
           );
           _cartItems.clear();
           Navigator.of(context, rootNavigator: true).pop('dialog');
-          Navigator.of(context).pushNamed(OrderOverviewScreen.routeName);
+          Navigator.of(context)
+              .pushReplacementNamed(OrderOverviewScreen.routeName);
         },
       );
 

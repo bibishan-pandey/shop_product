@@ -4,6 +4,7 @@ import 'package:shop_product/providers/cart_provider.dart';
 import 'package:shop_product/providers/product_provider.dart';
 import 'package:shop_product/screens/cart_overview_screen.dart';
 import 'package:shop_product/screens/order_overview_screen.dart';
+import 'package:shop_product/widgets/app_drawer.dart';
 import 'package:shop_product/widgets/badge.dart';
 import 'package:shop_product/widgets/product_item.dart';
 
@@ -23,6 +24,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: AppDrawer(),
       appBar: AppBar(
         title: Text('Shop Product'),
         centerTitle: false,
@@ -46,7 +48,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
             ),
           ),
           IconButton(
-            icon: Icon(Icons.shopping_bag),
+            icon: Icon(Icons.payments),
             tooltip: 'Orders',
             onPressed: () {
               Navigator.of(context).pushNamed(OrderOverviewScreen.routeName);
